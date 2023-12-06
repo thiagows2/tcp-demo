@@ -23,17 +23,13 @@ def non_recursive_fibonacci(n):
 
     return current
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
-
 @app.route("/nonrecursive", methods=["POST"])
 def non_rec_fibonacci():
     n = request.args.get('n', default=0, type=int)
-    return f'\n\n Fibonacci de {n} = {non_recursive_fibonacci(n)} \n\n'
+    return {'result': non_recursive_fibonacci(n)}, 200
 
 @app.route("/recursive", methods=["POST"])
 def rec_fibonacci():
     n = request.args.get('n', default=0, type=int)
-    return f'\n\n Fibonacci de {n} = {recursive_fibonacci(n)} \n\n'
+    return {'result': recursive_fibonacci(n)}, 200
 

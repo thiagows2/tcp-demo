@@ -7,10 +7,15 @@ const route = Router()
 app.use(express.json())
 
 route.post('/fibonacci', async (req: Request, res: Response) => {
-  const { number } = req.body
+  const { number, method = 'iterative' } = req.body
+
+  const endpoints: { [key: string]: string } = {
+    recursive: `http://127.0.0.1:5000/recursive?n=${number}`,
+    iterative: `http://127.0.0.1:5000/nonrecursive?n=${number}`
+  }
 
   try {
-    const response = await fetch(`http://127.0.0.1:5000/recursive?n=${number}`, {
+    const response = await fetch(endpoints[method], {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
